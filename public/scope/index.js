@@ -39,9 +39,10 @@ function inComputer() {
 
 // console.log(1, java);
 
-for (let i = 0; i < 10; i++) {
-  let j = i + 1;
-  setTimeout(() => {
-    console.log(i, j);
-  }, 10);
-}
+// for (let i = 0; i < 10; i++) {
+//   let j = i + 1;
+//   setTimeout(() => {
+//     console.log(i, j);
+//   }, 10);
+// }
+
