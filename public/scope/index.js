@@ -71,3 +71,27 @@ console.log(min, max);
 
 const data = minMax([1, 2,5, 11]);
 console.log(data[0], data[1]);
+
+// const 常量
+const a = 1;
+// a = 2;
+
+let b = 4;
+// b = 6;
+
+// 只读引用变量
+const obj = {
+  name: 'es6',
+  version: 9
+};
+
+// obj = {
+//   name: 'es9'
+// };
+obj.name = 'es9';
+
+
+// 尽量用const, 少用let
+
+// 代码质量和if语句的密度成反比
+// 代码质量和副作用语句密度成反比
