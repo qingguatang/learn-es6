@@ -91,7 +91,7 @@ const obj = {
 obj.name = 'es9';
 
 
-// 尽量用const, 少用let
+// ES6中: 尽量用const, 少用let, 不用var
 
 // 代码质量和if语句的密度成反比
 // 代码质量和副作用语句密度成反比
