@@ -1,4 +1,5 @@
 import React from 'react'
+import cx from 'classnames';
 import './style.scss';
 
 
@@ -19,4 +20,18 @@ const Button = (props) => {
   )
 };
 
-export default Button;
+
+const Button2 = ({
+  type = 'default',
+  shape, children, onClick
+}) => {
+  const cls = cx(
+    `type-${type}`,
+    { shape: `shape-${shape}` }
+  );
+  return (
+    <button className={cls} type="button" onClick={onClick}>{children}</button>
+  )
+};
+
+export default Button2;
