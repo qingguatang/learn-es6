@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Button type="primary">
+        <Button type="primary" onClick={e => alert('es6')}>
           <span>React</span>
         </Button>
         <Button type="primary" shape="circle">
