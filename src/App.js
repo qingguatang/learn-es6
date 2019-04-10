@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Button from './components/Button';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -13,7 +12,7 @@ class App extends Component {
         <Button type="primary" shape="circle">
           <span>Circle</span>
         </Button>
-        <Button>
+        <Button disabled={true} autoFocus>
           <span>Default Button</span>
         </Button>
       </div>
