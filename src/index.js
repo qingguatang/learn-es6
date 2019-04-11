@@ -24,3 +24,5 @@ function sum(...args) {
 
   return args.reduce((a, b) => a + b);
 }
+
+// Array: map, reduce, filter
