@@ -21,4 +21,12 @@
       border-bottom: 1px solid #eee;
     }
   }
+
+  .demobox {
+    opacity: 0;
+    transition: 1s opacity;
+    &.show {
+      opacity: 1;
+    }
+  }
 }

@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState, Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import cx from 'classnames';
 import Button from './components/Button';
 import { Tabs, TabPane } from './components/Tabs';
 import 'bulma';
@@ -20,22 +21,27 @@ class App extends Component {
   }
 }
 
-const UseAll = () => (
-  <div className="container">
-    <div className="header">
-      <h1 className="title">解构</h1>
-      <div className="desc"> 使数据访问更便捷!</div>
+const UseAll = () => {
+  const [show, setShow] = useState(false);
+  return (
+    <div className="container">
+      <div className="header">
+        <h1 className="title" onClick={() => setShow(!show)}>解构</h1>
+        <div className="desc"> 使数据访问更便捷!</div>
+      </div>
+      <div className={cx('demobox', { show })}>
+        <div className="demo">
+          <h2>1. Button</h2>
+          <UseButton />
+        </div>
+        <div className="demo">
+          <h2>2. Tabs</h2>
+          <UseTabs />
+        </div>
+      </div>
     </div>
-    <div className="demo">
-      <h2>1. Button</h2>
-      <UseButton />
-    </div>
-    <div className="demo">
-      <h2>2. Tabs</h2>
-      <UseTabs />
-    </div>
-  </div>
-);
+  );
+};
 
 
 const UseButton = () => (
