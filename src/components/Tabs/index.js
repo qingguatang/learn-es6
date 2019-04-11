@@ -1,4 +1,5 @@
 import React from 'react'
+import cx from 'classnames';
 
 class Tabs extends React.Component {
   constructor(props) {
@@ -50,7 +51,8 @@ class Tabs extends React.Component {
           <ul>
             {
               items.map((item, index) => (
-                <li key={index} className={active === index ? 'active' : ''}
+                <li key={index}
+                    className={cx({'is-active': active === index })}
                     onClick={() => this.setState({ active: index })}>
                   <a>{item.title}</a>
                 </li>
