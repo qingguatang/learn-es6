@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Button from './components/Button';
-import Tabs from './components/Tabs';
+import { Tabs, TabPane } from './components/Tabs';
 import 'bulma';
 import './App.css';
 
@@ -24,7 +24,12 @@ class App extends Component {
           </Button>
         </div>
       */}
-      <Tabs />
+      <Tabs>
+        <TabPane title="Tab1">ES6 Body 1</TabPane>
+        <TabPane title="Tab2">ES6 Body 2</TabPane>
+        <TabPane title="Tab3">Body 3</TabPane>
+        <TabPane title="Tab4">Body 4</TabPane>
+      </Tabs>
       </div>
     );
   }

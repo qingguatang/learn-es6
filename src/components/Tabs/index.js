@@ -9,18 +9,33 @@ class Tabs extends React.Component {
   }
 
   render() {
+    // const children = this.props.children;
+    const { children } = this.props;
+    console.log(children);
+
+    const items = [];
+    for (let i = 0; i < children.length; i++) {
+      // const cur = children[i];
+      const { title = 'Default', children: body } = children[i].props;
+      const item = {
+        title,
+        body
+      };
+      items.push(item);
+    }
+
     // const active = this.state.active;
     const { active } = this.state;
-    const items = [
-      { title: 'Tab1', body: 'Body1' },
-      { title: 'Tab2', body: 'Body2' },
-      { title: 'Tab3', body: 'Body3' },
-      { title: 'Tab4', body: 'Body4' },
-    ];
+    // const items = [
+    //   { title: 'Tab1', body: 'Body1' },
+    //   { title: 'Tab2', body: 'Body2' },
+    //   { title: 'Tab3', body: 'Body3' },
+    //   { title: 'Tab4', body: 'Body4' },
+    // ];
     const activeItem = items[active];
     return (
       <div className="tabs-container">
-        <div class="tabs">
+        <div className="tabs">
           <ul>
             {
               items.map((item, index) => (
@@ -40,4 +55,9 @@ class Tabs extends React.Component {
   }
 }
 
+const TabPane = () => {
+  return null;
+};
+
 export default Tabs;
+export { Tabs, TabPane };
