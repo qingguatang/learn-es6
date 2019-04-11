@@ -11,14 +11,16 @@ const Button = (props) => {
   // const type = props.type;
   // const shape = props.shape;
   const {
-    type = 'default', shape, children, onClick,
+    type = 'default', size, rounded,
+    children, onClick,
     ...more
   } = props;
   console.log('more', more);
 
-  const typeClass = `type-${type}`;
-  const shapeClass = shape ? `shape-${shape}` : '';
-  const cls = `${typeClass} ${shapeClass}`;
+  const typeClass = `is-${type}`;
+  const sizeClass = size ? `is-${size}` : '';
+  const roundClass = rounded ? 'is-rounded' : '';
+  const cls = `button ${typeClass} ${sizeClass} ${roundClass}`;
   return (
     <button className={cls} type="button" onClick={onClick} {...more}>{children}</button>
   )
@@ -26,13 +28,14 @@ const Button = (props) => {
 
 
 const Button2 = ({
-  type = 'default',
-  shape, children, onClick,
+  type = 'default', size, rounded,
+  children, onClick,
   ...more
 }) => {
   const cls = cx(
-    `type-${type}`,
-    { shape: `shape-${shape}` }
+    'button',
+    `is-${type}`,
+    { size: `is-${size}`, rounded }
   );
   return (
     <button className={cls} type="button" onClick={onClick} {...more}>{children}</button>
