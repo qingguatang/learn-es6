@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Button from './components/Button';
+import Tabs from './components/Tabs';
 import 'bulma';
 import './App.css';
 
@@ -7,6 +8,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+      {/*
         <div className="buttons">
           <Button type="primary" onClick={e => alert('es6')}>
             <span>React</span>
@@ -21,6 +23,8 @@ class App extends Component {
             <span>Default Button</span>
           </Button>
         </div>
+      */}
+      <Tabs />
       </div>
     );
   }
