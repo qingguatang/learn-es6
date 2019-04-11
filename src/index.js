@@ -25,4 +25,15 @@ function sum(...args) {
   return args.reduce((a, b) => a + b);
 }
 
+
+function minMax(...args) {
+  const min = args.reduce((a, b) => a < b ? a : b);
+  const max = args.reduce((a, b) => a < b ? b : a);
+  return [min, max];
+}
+
+const [min, max] = minMax(11, 22, 1, 4, 5);
+console.log(min, max);
+
+
 // Array: map, reduce, filter
