@@ -27,7 +27,7 @@ const Button2 = ({
   onClick: onClickHandler,
   ...more
 }) => {
-  console.log(more);
+  // console.log(more);
   // const type = props.type;
   // const children = props.children;
   // const { type = 'default', size, rounded, children } = props;
