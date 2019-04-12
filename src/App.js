@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'bulma';
 import Button from './components/Button';
+import Tabs from './components/Tabs';
 import './App.scss';
 
 
@@ -8,12 +9,7 @@ class App extends Component {
   render() {
     return (
       <div className="App buttons">
-        <Button disabled name="react" onClick={() => alert('es6')}>Default</Button>
-        <Button type={null}>Null</Button>
-        <Button type="info"><div>ABC</div>ES6</Button>
-        <Button type="danger">Warn</Button>
-        <Button size="large">Big</Button>
-        <Button rounded>Round</Button>
+        <Tabs></Tabs>
       </div>
     );
   }
