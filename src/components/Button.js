@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 
 const Button = (props) => {
   // const type = props.type;
@@ -35,14 +36,20 @@ const Button2 = ({
   // const typeClass = type ? 'is-' + type : '';
   // const typeClass = `is-${type ? type : 'default'}`;
   // const typeClass = `is-${type || 'default'}`;
-  const typeClass = `is-${type}`;
+  // const typeClass = `is-${type}`;
 
   // const sizeClass = size ? 'is-' + size : '';
-  const sizeClass = size ? `is-${size}` : '';
-  const roundedClass = rounded ? 'is-rounded' : '';
+  // const sizeClass = size ? `is-${size}` : '';
+  // const roundedClass = rounded ? 'is-rounded' : '';
 
   // const cls = 'button ' + typeClass + ' ' + sizeClass;
-  const cls = `button ${typeClass} ${sizeClass} ${roundedClass}`;
+  // const cls = `button ${typeClass} ${sizeClass} ${roundedClass}`;
+  const cls = cx(
+    'button',
+    `is-${type}`,
+    size && `is-${size}`,
+    rounded && 'is-rounded'
+  )
   return (
     <button {...more} onClick={onClickHandler} className={cls}>{children}</button>
   )
