@@ -7,8 +7,10 @@ import './App.scss';
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Button />
+      <div className="App buttons">
+        <Button type="info"><div>ABC</div>ES6</Button>
+        <Button type="danger">Warn</Button>
+        <Button size="large">Big</Button>
       </div>
     );
   }
