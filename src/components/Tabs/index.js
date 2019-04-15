@@ -13,15 +13,19 @@ class Tabs extends React.Component {
     const { children } = this.props;
     // console.log(children);
 
-    const items = [];
-    for (let i = 0; i < children.length; i++) {
-      const cur = children[i];
-      const item = {
-        title: cur.props.tab,
-        body: cur.props.children
-      }
-      items.push(item);
-    }
+    // const items = [];
+    // for (let i = 0; i < children.length; i++) {
+    //   const cur = children[i];
+    //   const item = {
+    //     title: cur.props.tab,
+    //     body: cur.props.children
+    //   }
+    //   items.push(item);
+    // }
+    const items = children.map(({ props }) => {
+      const { tab: title, children: body } = props;
+      return  { title, body };
+    })
 
     // const items = [
     //   { title: 'Tab 1', body: 'Body 1' },
