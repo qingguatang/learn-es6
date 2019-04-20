@@ -28,7 +28,7 @@ class Page extends React.Component {
   render() {
     return (
       <div>
-        <button className="btn btn-primary" onClick={() => this.setState({ showModal: true })}>Open Dialog</button>
+        <button type="button" className="btn btn-primary" onClick={() => this.setState({ showModal: true })}>Open Dialog</button>
         <Modal
             title="ES6面向对象编程应用"
             visible={this.state.showModal}
