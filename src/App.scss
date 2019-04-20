@@ -1,6 +1,32 @@
 .App {
-  padding: 20px;
-  .desc {
-    font-size: 18px;
+  .header {
+    margin-bottom: 20px;
+    padding: 20px;
+    display: flex;
+    .desc {
+      margin-top: 10px;
+      margin-left: 20px;
+      font-size: 18px;
+    }
+  }
+
+  .demo {
+    padding: 0 20px;
+    margin-bottom: 50px;
+    h2 {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      border-bottom: 1px solid #eee;
+    }
+  }
+
+  .demobox {
+    opacity: 0;
+    transition: 1s opacity;
+    &.show {
+      opacity: 1;
+    }
   }
 }

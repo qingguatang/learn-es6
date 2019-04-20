@@ -25,7 +25,7 @@ class Tabs extends React.Component {
     const items = children.map(({ props }) => {
       const { tab: title, children: body } = props;
       return  { title, body };
-    })
+    });
 
     // const items = [
     //   { title: 'Tab 1', body: 'Body 1' },
@@ -43,7 +43,7 @@ class Tabs extends React.Component {
               items.map((item, index) => (
                 <li key={index} className={activeKey === index ? 'is-active' : ''}
                     onClick={() => this.swithTo(index)}>
-                  <a>{item.title}</a>
+                  <a>{item.title}</a> {/* eslint-disable-line */}
                 </li>
               ))
             }
@@ -70,3 +70,4 @@ function TabPane() {
 Tabs.TabPane = TabPane;
 
 export default Tabs;
+export { Tabs, TabPane };

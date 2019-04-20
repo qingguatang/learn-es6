@@ -55,3 +55,5 @@ const Button2 = ({
   )
 };
 export default Button2;
+
+export { Button, Button2 };
