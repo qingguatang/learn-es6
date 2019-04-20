@@ -59,6 +59,8 @@ class Modal {
   }
 
   close() {
+    const { beforeClose } = this.options;
+    beforeClose && beforeClose();
     this.el.parentNode.removeChild(this.el);
   }
 }
@@ -77,6 +79,9 @@ function openModal() {
       { name: 'Close', text: '关闭' },
       { name: 'Confirm', text: '确定', primary: true }
     ],
+    beforeClose() {
+      console.log('before close');
+    },
     onClose() {
       alert('好的');
     },
