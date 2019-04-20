@@ -1,6 +1,6 @@
 import React from 'react'
 import cx from 'classnames';
-import Transition from 'react-addons-css-transition-group';
+import CSSTransition from 'react-addons-css-transition-group';
 import './Modal.scss';
 
 
@@ -15,7 +15,7 @@ class Modal extends React.Component {
   render() {
     const { title, visible, children, onCancel, buttons } = this.props;
     return (
-      <Transition transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+      <CSSTransition transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
       {
         visible ? 
         <div>
@@ -48,7 +48,7 @@ class Modal extends React.Component {
           <div className="modal-backdrop fade show"></div>
         </div> : null
       }
-      </Transition>
+      </CSSTransition>
     );
   }
 }
