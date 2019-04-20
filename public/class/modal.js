@@ -1,4 +1,4 @@
-/* global delegate */
+/* global delegate, escapeHtml j*/
 
 class EventEmitter {
   listeners = [];
@@ -29,6 +29,23 @@ class EventEmitter {
 }
 
 class Modal extends EventEmitter {
+  static confirm({ message, ok, cancel }) {
+    new Modal({
+      title: '确认',
+      html: message,
+      buttons: [
+        { text: '取消', name: 'Cancel' },
+        { text: '确定', name: 'Confirm', primary: true }
+      ],
+      onConfirm() {
+        ok && ok();
+      },
+      onCancel() {
+        cancel && cancel();
+      }
+    })
+  }
+
   constructor(options) {
     super();
     this.options = options || {};
@@ -38,31 +55,18 @@ class Modal extends EventEmitter {
   }
 
   open() {
-    const { title, html: content, buttons, beforeOpen } = this.options;
+    const { html: content, beforeOpen, hasHeader = true, hasFooter = true } = this.options;
     beforeOpen && beforeOpen();
-
-    const buttonsHtml = buttons.map(button => {
-      return `<button type="button"
-         class="btn ${button.primary ? 'btn-primary' : 'btn-secondary'}"
-         data-action="${button.name || 'Close'}">${button.text}</button>`
-    }).join('');
 
     const html = `
       <div class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
           <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">${escapeHtml(title)}</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
+            ${hasHeader ? this.renderHeader() : ''}
             <div class="modal-body">
             ${content}
             </div>
-            <div class="modal-footer">
-            ${buttonsHtml}
-            </div>
+            ${hasFooter ? this.renderFooter() : ''}
           </div>
         </div>
       </div>
@@ -71,6 +75,32 @@ class Modal extends EventEmitter {
 
     this.el.innerHTML = html;
     document.querySelector('body').appendChild(this.el);
+  }
+
+  renderHeader() {
+    const { title } = this.options;
+    return `
+      <div class="modal-header">
+        <h5 class="modal-title">${escapeHtml(title)}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    `;
+  }
+
+  renderFooter() {
+    const { buttons = [] } = this.options;
+    const buttonsHtml = buttons.map(button => {
+      return `<button type="button"
+         class="btn ${button.primary ? 'btn-primary' : 'btn-secondary'}"
+         data-action="${button.name || 'Close'}">${button.text}</button>`
+    }).join('');
+    return `
+      <div class="modal-footer">
+      ${buttonsHtml}
+      </div>
+    `;
   }
 
   handleEvents() {
@@ -98,10 +128,44 @@ class Modal extends EventEmitter {
 }
 
 
+class MiniModal extends Modal {
+  // override
+  // 重写
+  renderHeader() {
+    return '';
+  }
+  renderFooter() {
+    return '';
+  }
+}
+
+
+class MiniModal2 {
+  constructor(options) {
+    this.modal = new Modal({
+      hasHeader: false,
+      hasFooter: false,
+      ...options
+    });
+  }
+
+  on(...args) {
+    return this.modal.on(...args);
+  }
+
+  close() {
+    this.modal.close();
+  }
+}
+
+// 优先使用组合，而不是继承
+
+
 const btn = document.querySelector('.open.btn');
 btn.addEventListener('click', () => {
   openModal();
 })
+
 
 function openModal() {
   const modal = new Modal({
@@ -133,3 +197,17 @@ function openModal() {
     console.log('on close');
   });
 }
+
+
+const delBtn = document.querySelector('.btn.delete');
+delBtn.addEventListener('click', () => {
+  Modal.confirm({
+    message: '确定要删除吗',
+    ok() {
+      console.log('删除记录');
+    },
+    cancel() {
+      console.log('取消了');
+    }
+  })
+});
