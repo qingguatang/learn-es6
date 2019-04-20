@@ -1,7 +1,34 @@
 /* global delegate */
 
-class Modal {
+class EventEmitter {
+  constructor() {
+    this.listeners = [
+      // { event: 'close', handler: function... }
+    ];
+  }
+
+  // event emitter
+  on(event, handler) {
+    this.listeners.push({ event, handler });
+  }
+
+  emit(event, ...data) {
+    // for (let i = 0; i < this.listeners.length; i++) {
+    //   const item = this.listeners[i];
+    //   if (item.event === event) {
+    //     item.handler();
+    //   }
+    // }
+
+    this.listeners
+      .filter(item => item.event === event)
+      .forEach(item => item.handler(...data));
+  }
+}
+
+class Modal extends EventEmitter {
   constructor(options) {
+    super();
     this.options = options || {};
     this.el = document.createElement('div');
     this.handleEvents();
@@ -64,6 +91,7 @@ class Modal {
     const { beforeClose } = this.options;
     beforeClose && beforeClose();
     this.el.parentNode.removeChild(this.el);
+    this.emit('close');
   }
 }
 
@@ -97,5 +125,9 @@ function openModal() {
         e.detail.close();
       }, 3000);
     }
+  });
+
+  modal.on('close', () => {
+    console.log('on close');
   });
 }
