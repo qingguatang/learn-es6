@@ -9,7 +9,9 @@ class Modal {
   }
 
   open() {
-    const { title, html: content, buttons } = this.options;
+    const { title, html: content, buttons, beforeOpen } = this.options;
+    beforeOpen && beforeOpen();
+
     const buttonsHtml = buttons.map(button => {
       return `<button type="button"
          class="btn ${button.primary ? 'btn-primary' : 'btn-secondary'}"
@@ -79,6 +81,9 @@ function openModal() {
       { name: 'Close', text: '关闭' },
       { name: 'Confirm', text: '确定', primary: true }
     ],
+    beforeOpen() {
+      console.log('before open');
+    },
     beforeClose() {
       console.log('before close');
     },
