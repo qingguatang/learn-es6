@@ -50,8 +50,11 @@ class Modal {
     delegate(this.el, '.modal-footer button[data-action]', 'click', e => {
       const action = e.target.dataset.action;
       const fn = this.options[`on${action}`];
-      fn && fn();
-      this.close();
+      const event = new CustomEvent(action, { cancelable: true, detail: this });
+      fn && fn(event);
+      if (!event.defaultPrevented) {
+        this.close();
+      }
     });
   }
 
@@ -77,8 +80,12 @@ function openModal() {
     onClose() {
       alert('好的');
     },
-    onConfirm() {
+    onConfirm(e) {
+      e.preventDefault();
       alert('是那么回事!');
+      setTimeout(() => {
+        e.detail.close();
+      }, 3000);
     }
   });
 }
