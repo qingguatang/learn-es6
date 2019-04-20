@@ -1,11 +1,13 @@
 /* global delegate */
 
 class EventEmitter {
-  constructor() {
-    this.listeners = [
-      // { event: 'close', handler: function... }
-    ];
-  }
+  listeners = [];
+
+  // constructor() {
+  //   this.listeners = [
+  //     // { event: 'close', handler: function... }
+  //   ];
+  // }
 
   // event emitter
   on(event, handler) {
