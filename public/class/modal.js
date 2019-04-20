@@ -1,14 +1,21 @@
+/* global delegate */
+
 class Modal {
   constructor(options) {
     this.options = options || {};
+    this.el = document.createElement('div');
+    this.handleEvents();
     this.open();
   }
 
   open() {
     const { title, html: content, buttons } = this.options;
     const buttonsHtml = buttons.map(button => {
-      return `<button type="button" class="btn ${button.primary ? 'btn-primary' : 'btn-secondary'}">${button.text}</button>`
+      return `<button type="button"
+         class="btn ${button.primary ? 'btn-primary' : 'btn-secondary'}"
+         data-action="${button.name || 'Close'}">${button.text}</button>`
     }).join('');
+
     const html = `
       <div class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -30,67 +37,48 @@ class Modal {
       </div>
       <div class="modal-backdrop fade show"></div>
     `;
-    const el = document.createElement('div');
-    el.innerHTML = html;
-    document.querySelector('body').appendChild(el);
+
+    this.el.innerHTML = html;
+    document.querySelector('body').appendChild(this.el);
+  }
+
+  handleEvents() {
+    delegate(this.el, '.modal-header .close', 'click', () => {
+      this.close();
+    });
+
+    delegate(this.el, '.modal-footer button[data-action]', 'click', e => {
+      const action = e.target.dataset.action;
+      const fn = this.options[`on${action}`];
+      fn && fn();
+      this.close();
+    });
+  }
+
+  close() {
+    this.el.parentNode.removeChild(this.el);
   }
 }
 
 
-const modal = new Modal({
-  title: 'ES6面向对象编程应用',
-  html: '通过实例学习ES6又快又有趣!',
-  buttons: [
-    { text: '关闭' },
-    { text: '确定', primary: true }
-  ]
-});
+const btn = document.querySelector('.open.btn');
+btn.addEventListener('click', () => {
+  openModal();
+})
 
-
-function escapeHtml (string) {
-  var matchHtmlRegExp = /["'&<>]/;
-  var str = '' + string
-  var match = matchHtmlRegExp.exec(str)
-
-  if (!match) {
-    return str
-  }
-
-  var escape
-  var html = ''
-  var index = 0
-  var lastIndex = 0
-
-  for (index = match.index; index < str.length; index++) {
-    switch (str.charCodeAt(index)) {
-      case 34: // "
-        escape = '&quot;'
-        break
-      case 38: // &
-        escape = '&amp;'
-        break
-      case 39: // '
-        escape = '&#39;'
-        break
-      case 60: // <
-        escape = '&lt;'
-        break
-      case 62: // >
-        escape = '&gt;'
-        break
-      default:
-        continue
+function openModal() {
+  const modal = new Modal({
+    title: 'ES6面向对象编程应用',
+    html: '通过实例学习ES6又快又有趣!',
+    buttons: [
+      { name: 'Close', text: '关闭' },
+      { name: 'Confirm', text: '确定', primary: true }
+    ],
+    onClose() {
+      alert('好的');
+    },
+    onConfirm() {
+      alert('是那么回事!');
     }
-
-    if (lastIndex !== index) {
-      html += str.substring(lastIndex, index)
-    }
-
-    lastIndex = index + 1
-    html += escape
-  }
-
-  return lastIndex !== index
-    ? html + str.substring(lastIndex, index)
-    : html
+  });
 }
