@@ -38,7 +38,7 @@ class Modal {
 
 
 const modal = new Modal({
-  title: 'ES6面向对象编程<div>编程',
+  title: 'ES6面向对象编程应用',
   html: '通过实例学习ES6又快又有趣!',
   buttons: [
     { text: '关闭' },
