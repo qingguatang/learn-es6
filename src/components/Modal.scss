@@ -1,21 +1,49 @@
+// .example-enter {
+// }
+
+// .example-enter.example-enter-active {
+//   .modal {
+//     animation: 1s zoomInDown;
+//   }
+// }
+
+// .example-leave {
+// }
+
+// .example-leave.example-leave-active {
+//   .modal {
+//     animation: 1s zoomOutUp;
+//   }
+// }
+
 .example-enter {
-}
-
-.example-enter.example-enter-active {
-  .modal {
-    animation: 1s zoomInDown;
+  opacity: 0.01;
+  .modal-dialog {
+    transform: scale(0.8);
+  }
+  &.example-enter-active {
+    opacity: 1;
+    transition: opacity 300ms ease-in;
+    .modal-dialog {
+      transform: scale(1);
+      transition: transform 300ms ease-in;
+    }
   }
 }
-
 .example-leave {
-}
-
-.example-leave.example-leave-active {
-  .modal {
-    animation: 1s zoomOutUp;
+  opacity: 1;
+  .modal-dialog {
+    transform: scale(1);
+  }
+  &.example-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-out;
+    .modal-dialog {
+      transform: scale(0.6);
+      transition: transform 300ms ease-out;
+    }
   }
 }
-
 
 @keyframes zoomInDown {
   from {
