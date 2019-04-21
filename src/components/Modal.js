@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom';
 import cx from 'classnames';
 import Transition from 'react-addons-css-transition-group';
 import './Modal.scss';
@@ -13,6 +14,11 @@ class Modal extends React.Component {
   };
 
   render() {
+    const container = document.querySelector('body');
+    return ReactDOM.createPortal(this.renderBody(), container);
+  }
+
+  renderBody() {
     const { title, visible, children, onCancel, buttons } = this.props;
     return (
       <Transition transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
