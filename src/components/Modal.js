@@ -61,19 +61,11 @@ class Modal extends React.Component {
 
 class ConfirmModal extends React.Component {
   state = {
-    visible: true
+    visible: false
   }
 
-  onOk = () => {
-    this.setState({ visible: false });
-    const { ok } = this.props;
-    ok && ok();
-  }
-
-  onCancel = () => {
-    this.setState({ visible: false });
-    const { cancel } = this.props;
-    cancel && cancel();
+  componentDidMount() {
+    this.setState({ visible: true });
   }
 
   render() {
@@ -88,6 +80,18 @@ class ConfirmModal extends React.Component {
     return (
       <Modal {...props} />
     );
+  }
+
+  onOk = () => {
+    this.setState({ visible: false });
+    const { ok } = this.props;
+    ok && ok();
+  }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+    const { cancel } = this.props;
+    cancel && cancel();
   }
 }
 
