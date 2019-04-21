@@ -211,3 +211,9 @@ delBtn.addEventListener('click', () => {
     }
   })
 });
+
+
+const infoBtn = document.querySelector('.btn.info');
+infoBtn.addEventListener('click', () => {
+  new MiniModal({ html: '《深入理解ES6》' });
+});
