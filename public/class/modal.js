@@ -160,7 +160,6 @@ class MiniModal2 {
 
 // 优先使用组合，而不是继承
 
-
 const btn = document.querySelector('.open.btn');
 btn.addEventListener('click', () => {
   openModal();
@@ -169,7 +168,7 @@ btn.addEventListener('click', () => {
 
 function openModal() {
   const modal = new Modal({
-    title: 'ES6面向对象编程应用',
+    title: 'ES6面向对象编程',
     html: '通过实例学习ES6又快又有趣!',
     buttons: [
       { name: 'Close', text: '关闭' },
@@ -204,10 +203,10 @@ delBtn.addEventListener('click', () => {
   Modal.confirm({
     message: '确定要删除吗',
     ok() {
-      console.log('删除记录');
+      console.log('ok');
     },
     cancel() {
-      console.log('取消了');
+      console.log('cancel');
     }
   })
 });
@@ -215,5 +214,6 @@ delBtn.addEventListener('click', () => {
 
 const infoBtn = document.querySelector('.btn.info');
 infoBtn.addEventListener('click', () => {
-  new MiniModal({ html: '《深入理解ES6》' });
+  const loading = new MiniModal({ html: '加载中...' });
+  setTimeout(() => loading.close(), 2000);
 });
