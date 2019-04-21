@@ -59,4 +59,56 @@ class Modal extends React.Component {
   }
 }
 
+class ConfirmModal extends React.Component {
+  state = {
+    visible: true
+  }
+
+  onOk = () => {
+    this.setState({ visible: false });
+    const { ok } = this.props;
+    ok && ok();
+  }
+
+  onCancel = () => {
+    this.setState({ visible: false });
+    const { cancel } = this.props;
+    cancel && cancel();
+  }
+
+  render() {
+    const { title = '确认', message } = this.props;
+    const props = {
+      title,
+      children: message,
+      visible: this.state.visible,
+      onOk: this.onOk,
+      onCancel: this.onCancel,
+    };
+    return (
+      <Modal {...props} />
+    );
+  }
+}
+
+
+Modal.confirm = function(options) {
+  const modal = <ConfirmModal key={Date.now()} {...options} />;
+  ReactDOM.render(modal, getModalContainer());
+};
+
+
+function getModalContainer() {
+  const id = 'modal_container';
+  const el = document.getElementById(id);
+  if (el) {
+    return el;
+  }
+  const newEl = document.createElement('div');
+  newEl.setAttribute('id', id);
+  document.querySelector('body').appendChild(newEl);
+  return newEl;
+}
+
+
 export default Modal;
