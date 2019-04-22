@@ -2,6 +2,10 @@ class Modal {
   // HelloWorld
   // 构造函数
   constructor(options) {
+    const el = document.createElement('div');
+    this.el = el;
+    this.handleEvents();
+
     const { title, html: body, buttons = [] } = options;
     const btnHtml = buttons.map(button => {
       return `
@@ -31,17 +35,36 @@ class Modal {
         <div class="modal-backdrop fade show"></div>
     </div>
     `;
-    const el = document.createElement('div');
     el.innerHTML = html;
     document.querySelector('body').appendChild(el);
   }
+
+  handleEvents() {
+    window.delegate(this.el, '.modal-header .close', 'click', () => {
+      this.close();
+    });
+  }
+
+  // 方法
+  close() {
+    const el = this.el;
+    // $(el).remove();
+    el.parentNode.removeChild(el);
+  }
 }
 
-const modal = new Modal({
-  title: '学习ES6',
-  html: '通过实例学习ES6又快又有趣!',
-  buttons: [
-    { text: '取消' },
-    { text: '确认', primary: true }
-  ]
-});
+
+
+const openBtn = document.querySelector('button.open');
+openBtn.addEventListener('click', () => {
+  const modal = new Modal({
+    title: '学习ES6',
+    html: '通过实例学习ES6又快又有趣!',
+    buttons: [
+      { text: '取消' },
+      { text: '确认', primary: true }
+    ]
+  });
+
+  // modal.close();
+})
