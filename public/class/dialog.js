@@ -2,6 +2,7 @@ class Modal {
   // HelloWorld
   // 构造函数
   constructor(options) {
+    this.options = options;
     const el = document.createElement('div');
     this.el = el;
     this.handleEvents();
@@ -9,7 +10,7 @@ class Modal {
     const { title, html: body, buttons = [] } = options;
     const btnHtml = buttons.map(button => {
       return `
-        <button type="button" class="btn ${button.primary ? 'btn-primary' : 'btn-secondary'}" data-dismiss="modal">${button.text}</button>
+        <button data-name="${button.name}" type="button" class="btn ${button.primary ? 'btn-primary' : 'btn-secondary'}" data-dismiss="modal">${button.text}</button>
       `
     }).join('');
     const html = `
@@ -43,6 +44,13 @@ class Modal {
     window.delegate(this.el, '.modal-header .close', 'click', () => {
       this.close();
     });
+    window.delegate(this.el, '.modal-footer button[data-name]', 'click', (e) => {
+      // console.log(e.delegateTarget);
+      const name = e.delegateTarget.dataset.name;
+      const fn = this.options['on' + name];
+      fn && fn();
+      this.close();
+    })
   }
 
   // 方法
@@ -61,9 +69,21 @@ openBtn.addEventListener('click', () => {
     title: '学习ES6',
     html: '通过实例学习ES6又快又有趣!',
     buttons: [
-      { text: '取消' },
-      { text: '确认', primary: true }
-    ]
+      { name: 'Cancel', text: '取消' },
+      { name: 'Ok', text: '确认', primary: true }
+    ],
+
+    // onOk: function() {
+
+    // },
+    onOk() {
+      // super.onOk();
+      console.log('ok');
+    },
+
+    onCancel() {
+      console.log('cancel');
+    }
   });
 
   // modal.close();
