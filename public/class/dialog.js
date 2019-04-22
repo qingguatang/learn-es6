@@ -59,6 +59,31 @@ class Modal {
     // $(el).remove();
     el.parentNode.removeChild(el);
   }
+
+  static confirm({ title = '确认', message, ok, cancel }) {
+    new Modal({
+      title,
+      html: message,
+      buttons: [
+        { name: 'Cancel', text: '取消' },
+        { name: 'Ok', text: '确认', primary: true }
+      ],
+
+      // onOk: function() {
+
+      // },
+      onOk() {
+        // super.onOk();
+        console.log('ok');
+        ok && ok();
+      },
+
+      onCancel() {
+        console.log('cancel');
+        cancel && cancel();
+      }
+    });
+  }
 }
 
 
@@ -88,3 +113,10 @@ openBtn.addEventListener('click', () => {
 
   // modal.close();
 });
+
+Modal.confirm({
+  message: '确定要删除吗',
+  ok() {
+    console.log('delete item');
+  }
+})
