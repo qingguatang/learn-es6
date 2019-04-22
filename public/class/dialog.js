@@ -87,4 +87,4 @@ openBtn.addEventListener('click', () => {
   });
 
   // modal.close();
-})
+});
