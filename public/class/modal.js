@@ -215,5 +215,5 @@ delBtn.addEventListener('click', () => {
 const infoBtn = document.querySelector('.btn.info');
 infoBtn.addEventListener('click', () => {
   const loading = new MiniModal({ html: '加载中...' });
-  setTimeout(() => loading.close(), 2000);
+  // setTimeout(() => loading.close(), 2000);
 });

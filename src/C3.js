@@ -1,6 +1,7 @@
 import React from 'react'
 import Modal from './components/Modal';
 import 'bootstrap/dist/css/bootstrap.css';
+import './C3.scss';
 
 
 class Page extends React.Component {
@@ -8,14 +9,16 @@ class Page extends React.Component {
     showModal: false
   }
 
-  handleOk = () => {
-    console.log('ok');
+  onModalRequestClose = () => {
     this.setState({ showModal: false });
   }
 
-  handleCancel = () => {
+  onModalOk = () => {
+    console.log('ok');
+  }
+
+  onModalCancel = () => {
     console.log('cancel');
-    this.setState({ showModal: false });
   }
 
   // constructor(props) {
@@ -46,12 +49,29 @@ class Page extends React.Component {
           <button type="button" className="btn btn-warning" onClick={this.handleDeleteItem}>Delete</button>
         </div>
         <Modal
-            title="ES6面向对象编程应用"
+            className="es6-demo-modal"
+            title="ES6 class"
             visible={this.state.showModal}
-            onOk={this.handleOk}
-            onCancel={this.handleCancel}>
+            onOk={this.onModalOk}
+            onCancel={this.onModalCancel}
+            onRequestClose={this.onModalRequestClose}>
           <div>
-            通过实例学习<a href="#">ES6</a>又快又有趣
+            <div>
+              <h3>ES6</h3>
+              <ul>
+                <li>class fields - 实例属性</li>
+                <li>arrow function - 箭头函数</li>
+              </ul>
+            </div>
+            <div>
+              <h3>React</h3>
+              <ul>
+                <li>生命周期</li>
+                <li>Portal</li>
+                <li>动画</li>
+                <li>PropTypes</li>
+              </ul>
+            </div>
           </div>
         </Modal>
       </div>
