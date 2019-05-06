@@ -57,7 +57,7 @@ class Modal extends React.Component {
       className, buttons
     } = this.props;
     return (
-      <Transition transitionName="example" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
+      <Transition transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={500}>
       {
         visible ?
         <div className={className}>
