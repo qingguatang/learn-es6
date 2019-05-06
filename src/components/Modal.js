@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Transition from 'react-addons-css-transition-group';
 import './Modal.scss';
@@ -133,6 +134,14 @@ class ConfirmModal extends React.Component {
     cancel && cancel();
   }
 }
+
+
+ConfirmModal.propTypes = {
+  title: PropTypes.string,
+  message: PropTypes.string.isRequired,
+  ok: PropTypes.func,
+  Cancel: PropTypes.func
+};
 
 
 Modal.confirm = function(options) {
