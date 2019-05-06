@@ -1,26 +1,38 @@
 import React from 'react'
+import cx from 'classnames';
 import './style.scss';
 
 
 class Modal extends React.Component {
+  static defaultProps = {
+    buttons: [
+      { text: '取消' },
+      { text: '确定', primary: true }
+    ]
+  }
+
   render() {
+    const { title, className, children, buttons } = this.props;
     return (
-      <div>
+      <div className={className}>
          <div className="modal" style={{display: 'block'}} tabIndex="-1" role="dialog">
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Modal title</h5>
+                <h5 className="modal-title">{title}</h5>
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
               <div className="modal-body">
-                <p>Modal body text goes here.</p>
+              {children}
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-primary">Save changes</button>
+              {
+                buttons.map((button, index) => (
+                  <button key={index} type="button" className={cx('btn', button.primary? 'btn-primary' : 'btn-secondary')}>{button.text}</button>
+                ))
+              }
               </div>
             </div>
           </div>
@@ -30,6 +42,10 @@ class Modal extends React.Component {
     );
   }
 }
+
+// Modal.defaultProps = {
+
+// };
 
 
 export default Modal;
