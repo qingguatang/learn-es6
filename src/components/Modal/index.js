@@ -12,7 +12,10 @@ class Modal extends React.Component {
   }
 
   render() {
-    const { title, className, children, buttons } = this.props;
+    const { title, className, children, buttons, visible } = this.props;
+    if (!visible) {
+      return null;
+    }
     return (
       <div className={className}>
          <div className="modal" style={{display: 'block'}} tabIndex="-1" role="dialog">
@@ -20,7 +23,7 @@ class Modal extends React.Component {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">{title}</h5>
-                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" className="close" onClick={this.props.onRequestClose} data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
