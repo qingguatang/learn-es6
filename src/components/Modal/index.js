@@ -12,6 +12,26 @@ class Modal extends React.Component {
     ]
   }
 
+  componentDidMount() {
+    const handler =  e => {
+      console.log(e);
+      if (e.keyCode === 27) {
+        this.props.onRequestClose();
+      }
+    }
+    window.addEventListener('keydown', handler)
+    // this.keydownHandler = handler;
+
+    this.clean = () => {
+      window.removeEventListener('keydown', handler);
+    }
+  }
+
+  componentWillUnmount() {
+    // window.removeEventListener('keydown', this.keydownHandler);
+    this.clean();
+  }
+
   render() {
     const { title, className, children, buttons, visible } = this.props;
     // if (!visible) {
