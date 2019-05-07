@@ -20,8 +20,8 @@ class Modal extends React.Component {
     return (
       <ReactCSSTransitionGroup
       transitionName="example"
-      transitionEnterTimeout={10000}
-      transitionLeaveTimeout={10000}>
+      transitionEnterTimeout={500}
+      transitionLeaveTimeout={300}>
       { visible ?
       <div className={className}>
          <div className="modal" style={{display: 'block'}} tabIndex="-1" role="dialog">
