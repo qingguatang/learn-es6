@@ -64,8 +64,15 @@ class QrcodePage extends React.Component {
       <div className={style.qrcode}>
         <button onClick={() => this.setState({ other: (other + 1) % 2 })}>Other</button>
         { other ?
-            <div name="a" className="other"><input type="checkbox" />1</div> :
-            <div name="b" className="other"><input type="checkbox" />2</div> }
+            <div>
+              <div key="1" name="a" className="other"><input type="checkbox" />1</div>
+              <div key="2" name="b" className="other"><input type="checkbox" />2</div>
+            </div> :
+            <div>
+              <div key="2" name="b" className="other"><input type="checkbox" />2</div>
+              <div key="1" name="a" className="other"><input type="checkbox" />1</div>
+            </div>
+        }
         <div className="field">
           <input type="text" className="form-control" placeholder="URL"
             value={url} onChange={e => this.setState({ url: e.target.value })} />
