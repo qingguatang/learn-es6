@@ -10,7 +10,7 @@ class Qrcode extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    console.log('ctor');
+    console.log(this.props.url, 'ctor');
   }
 
   componentDidMount() {
@@ -21,7 +21,7 @@ class Qrcode extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    console.log('unmount');
+    console.log(this.props.url, 'unmount');
   }
 
   componentDidUpdate(prev) {
@@ -70,10 +70,10 @@ class QrcodePage extends React.Component {
           <input type="text" className="form-control" placeholder="URL"
             value={url} onChange={e => this.setState({ url: e.target.value })} />
         </div>
-        <Qrcode url={this.state.url} />
+        <Qrcode key={this.state.url} url={this.state.url} />
       </div>
     );
-    console.log(node);
+    // console.log(node);
     return node;
   }
 }
