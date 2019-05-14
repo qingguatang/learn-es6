@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import 'bulma';
 import C2 from './C2';
 import C3 from './C3';
+import C5 from './pages/c5';
 import './App.scss';
 
 
@@ -13,6 +14,7 @@ class App extends Component {
         <Router>
           <Route path="/c2" component={C2} />
           <Route path="/c3" component={C3} />
+          <Route path="/c5" component={C5} />
         </Router>
       </div>
     );
