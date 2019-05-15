@@ -1,4 +1,5 @@
 import React from 'react';
+import cx from 'classnames';
 import axios from 'axios';
 import style from './style.scss';
 import Svg from 'react-inlinesvg'
@@ -35,7 +36,7 @@ class BooksPage extends React.PureComponent {
                 <div className="right part">
                   <div className="name">{book.name}</div>
                   <div className="author">{book.author}</div>
-                  <div className="star">{book.star}</div>
+                  <LevelStar value={book.star} />
                   <Price price={book.price} />
                 </div>
               </li>
@@ -60,6 +61,19 @@ const Price = ({ price }) => {
     </div>
   );
 }
+
+
+const LevelStar = ({ value }) => {
+  const percent = Math.floor((value * 100) / 5);
+  const style = { width: `${percent}%` };
+  return (
+    <div className={cx('level-star-component')}>
+      <div className="bg">
+        <div className="value" style={style}></div>
+      </div>
+    </div>
+  );
+};
 
 
 export default BooksPage;

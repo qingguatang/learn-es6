@@ -81,6 +81,19 @@ body {
   }
 }
 
+.level-star-component {
+  width: 73px;
+  .bg {
+    background: url('~./img/star.png') no-repeat -73px 0;
+    background-size: 150px
+  }
+  .value {
+    background: url('~./img/star.png') no-repeat 0 0;
+    background-size: 150px;
+    height: 15px;
+  }
+}
+
 :local(.search) {
   input {
     color: #899595;
@@ -116,6 +129,7 @@ body {
   }
 
   .author {
+    margin-bottom: rem(10);
     font-size: rem(26);
     color: #303030;
   }
@@ -125,6 +139,10 @@ body {
       display: block;
       max-width: 100%;
     }
+  }
+
+  .level-star-component {
+    margin-bottom: rem(20);
   }
 
   .price-component {
