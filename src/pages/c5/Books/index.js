@@ -21,8 +21,10 @@ class BooksPage extends React.PureComponent {
     return (
       <div className={style.books}>
         <div className={style.search}>
-          <Svg src={require('./img/search.svg')} />
-          <input type="text" placeholder="搜索商品" />
+          <div className="wrapper">
+            <Svg src={require('./img/search.svg')} />
+            <input type="text" placeholder="搜索商品" />
+          </div>
         </div>
         <ul className={style.list}>
           {

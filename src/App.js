@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import 'bulma';
+// import 'bulma';
 import C2 from './C2';
 import C3 from './C3';
 import Qrcode from './pages/c5/Qrcode';
