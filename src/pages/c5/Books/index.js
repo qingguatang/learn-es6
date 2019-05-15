@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import axios from 'axios';
 import style from './style.scss';
+import qs from 'query-string';
 import Svg from 'react-inlinesvg'
 
 
@@ -10,8 +11,20 @@ class BooksPage extends React.PureComponent {
     books: []
   };
 
+  onSearchKeyDown = e => {
+    if (e.keyCode === 13) {
+      const query = e.target.value;
+      this.search(query);
+    }
+  };
+
   async componentDidMount() {
-    const { data } = await axios.get('http://192.168.31.216:4001/books?q=javascript');
+    await this.search('javascript');
+  }
+
+  async search(query) {
+    const search = { q: query };
+    const { data } = await axios.get(`http://192.168.31.216:4001/books?${qs.stringify(search)}`);
     const books = data.entries;
     this.setState({ books });
   }
@@ -23,7 +36,7 @@ class BooksPage extends React.PureComponent {
         <div className={style.search}>
           <div className="wrapper">
             <Svg src={require('./img/search.svg')} />
-            <input type="text" placeholder="搜索商品" />
+            <input type="text" placeholder="搜索商品" onKeyDown={this.onSearchKeyDown} />
           </div>
         </div>
         <ul className={style.list}>
