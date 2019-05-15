@@ -32,11 +32,13 @@ class BooksPage extends React.PureComponent {
               <li key={book.id} className={style.book}>
                 <div className="left part">
                   <div className="image">
-                    <img src={book.image} alt="" />
+                    <a href={book.link}>
+                      <img src={book.image} alt="" />
+                    </a>
                   </div>
                 </div>
                 <div className="right part">
-                  <div className="name">{book.name}</div>
+                  <a className="name" href={book.link}>{book.name}</a>
                   <div className="author">{book.author}</div>
                   <LevelStar value={book.star} />
                   <Price price={book.price} />
