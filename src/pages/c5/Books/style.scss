@@ -1,0 +1,133 @@
+
+// rem辅助函数
+// 适合750宽度视觉搞
+@function rem($px) {
+  @return #{$px / 40}rem;
+}
+
+// 1px方案
+@mixin _hairline($x, $y, $type) {
+  position: absolute;
+  content: "";
+  #{$x}: 0;
+  #{$y}: 0;
+  #{$type}: 100%;
+
+  transform-origin: #{$x} #{$y};
+
+  @media (-webkit-min-device-pixel-ratio: 2) {
+    #{$type}: 200%;
+    transform: scale(0.5);
+  }
+
+  @media (-webkit-min-device-pixel-ratio: 3) {
+    #{$type}: 300%;
+    transform: scale(0.333);
+  }
+}
+
+// 底边框1px，其他的根据需要可自行添加
+@mixin hairline-bottom($color) {
+  position: relative;
+  &:after {
+    height: 0;
+    border-bottom: 1px solid $color;
+    @include _hairline(left, bottom, width);
+  }
+}
+
+// 多行省略
+@mixin text-ellipsis($line: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @if $line > 1 {
+    display: -webkit-box;
+    -webkit-line-clamp: $line;
+    flex-direction: column;
+  } @else {
+    display: block;
+    white-space: nowrap;
+  }
+}
+
+
+*, *:after, *:before {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 20px;
+}
+
+body {
+  font-family : "PingHei","Helvetica Neue","Helvetica","Arial","Verdana","sans-serif";
+  font-size: 0.8rem;
+}
+
+.price-component {
+  color: #B12704;
+  line-height: 1;
+  align-items: flex-start;
+  .unit {
+    margin-right: 3px;
+    font-family: Arial;
+    font-size: 70%;
+  }
+  .integer {
+  }
+  .point, .fraction {
+    font-size: 60%;
+  }
+}
+
+:local(.search) {
+  input {
+    color: #899595;
+  }
+}
+
+:local(.list) {
+}
+
+
+:local(.book) {
+  display: flex;
+  padding: rem(30) rem(42) rem(26) rem(8);
+
+  // border-bottom: 1px solid #d4d4d4;
+  @include hairline-bottom(#d4d4d4);
+
+  .left.part {
+    width: rem(238);
+    margin-right: rem(16);
+    padding-top: rem(6);
+  }
+
+  .right.part {
+    flex: 1;
+  }
+
+  .name {
+    @include text-ellipsis(2);
+    margin-bottom: rem(8);
+    white-space: normal;
+    font-size: rem(30);
+  }
+
+  .author {
+    font-size: rem(26);
+    color: #303030;
+  }
+
+  .image {
+    img {
+      display: block;
+      max-width: 100%;
+    }
+  }
+
+  .price-component {
+    font-size: rem(40);
+  }
+}
