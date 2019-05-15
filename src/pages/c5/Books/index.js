@@ -19,7 +19,7 @@ class BooksPage extends React.PureComponent {
   render() {
     const { books } = this.state;
     return (
-      <div className={style.books}>
+      <div className={style.page}>
         <div className={style.search}>
           <div className="wrapper">
             <Svg src={require('./img/search.svg')} />

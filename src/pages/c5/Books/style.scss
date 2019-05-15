@@ -94,11 +94,13 @@ body {
   }
 }
 
+
 :local(.search) {
   padding: rem(14) rem(16) rem(14);
   background: #262f3e;
   .wrapper {
-    padding: rem(8);
+    display: flex;
+    padding: rem(8) rem(16);
     background: #fff;
     border-radius: 5px;
   }
@@ -109,6 +111,9 @@ body {
     margin-right: rem(10);
   }
   input {
+    display: block;
+    flex: 1;
+    border: none;
     color: #899595;
     font-size: rem(28);
     &:focus {
@@ -118,8 +123,9 @@ body {
 }
 
 :local(.list) {
+  padding: 0;
+  margin: 0;
 }
-
 
 :local(.book) {
   display: flex;
