@@ -4,29 +4,39 @@ import axios from 'axios';
 import style from './style.scss';
 import qs from 'query-string';
 import Svg from 'react-inlinesvg'
+import ScrollView from 'components/ScrollView';
 
 
 class BooksPage extends React.PureComponent {
   state = {
+    query: {
+      page: 1,
+      q: ''
+    },
     books: []
   };
 
   onSearchKeyDown = e => {
     if (e.keyCode === 13) {
-      const query = e.target.value;
-      this.search(query);
+      this.load({ q: e.target.value });
     }
   };
 
-  async componentDidMount() {
-    await this.search('javascript');
+  onScroll = async() => {
+    const { query } = this.state;
+    await this.load({ page: query.page + 1 });
+  };
+
+  componentDidMount() {
+    this.load({ q: 'javascript' });
   }
 
-  async search(query) {
-    const search = { q: query };
-    const { data } = await axios.get(`http://192.168.31.216:4001/books?${qs.stringify(search)}`);
+  async load(query) {
+    query = {...this.state.query, ...query};
+    const { data } = await axios.get(`http://192.168.1.104:4001/books?${qs.stringify(query)}`);
     const books = data.entries;
-    this.setState({ books });
+    const nextBooks = [...this.state.books, ...books];
+    this.setState({ books: nextBooks, query });
   }
 
   render() {
@@ -39,27 +49,29 @@ class BooksPage extends React.PureComponent {
             <input type="text" placeholder="搜索商品" onKeyDown={this.onSearchKeyDown} />
           </div>
         </div>
-        <ul className={style.list}>
-          {
-            books.map(book => (
-              <li key={book.id} className={style.book}>
-                <div className="left part">
-                  <div className="image">
-                    <a href={book.link}>
-                      <img src={book.image} alt="" />
-                    </a>
+        <ScrollView className={style.scroll} onScroll={this.onScroll}>
+          <ul className={style.list}>
+            {
+              books.map(book => (
+                <li key={book.id} className={style.book}>
+                  <div className="left part">
+                    <div className="image">
+                      <a href={book.link}>
+                        <img src={book.image} alt="" />
+                      </a>
+                    </div>
                   </div>
-                </div>
-                <div className="right part">
-                  <a className="name" href={book.link}>{book.name}</a>
-                  <div className="author">{book.author}</div>
-                  <LevelStar value={book.star} />
-                  <Price price={book.price} />
-                </div>
-              </li>
-            ))
-          }
-        </ul>
+                  <div className="right part">
+                    <a className="name" href={book.link}>{book.name}</a>
+                    <div className="author">{book.author}</div>
+                    <LevelStar value={book.star} />
+                    <Price price={book.price} />
+                  </div>
+                </li>
+              ))
+            }
+          </ul>
+        </ScrollView>
       </div>
     );
   }

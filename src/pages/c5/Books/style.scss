@@ -96,8 +96,16 @@ body {
   }
 }
 
+:local(.page) {
+  padding-top: rem(92);
+}
 
 :local(.search) {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 10;
   padding: rem(14) rem(16) rem(14);
   background: #262f3e;
   .wrapper {
@@ -174,5 +182,15 @@ body {
 
   .price-component {
     font-size: rem(40);
+  }
+}
+
+
+:local(.scroll) {
+  .loading-indicator {
+    text-align: center;
+    padding: 10px 10px 20px;
+    font-size: 13px;
+    color: #666;
   }
 }
