@@ -814,6 +814,13 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
+"@babel/runtime@^7.0.0":
+  version "7.4.4"
+  resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.4.4.tgz#dc2e34982eb236803aa27a07fea6857af1b9171d"
+  integrity sha1-3C40mC6yNoA6onoH/qaFevG5Fx0=
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/runtime@^7.1.2":
   version "7.4.3"
   resolved "http://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.4.3.tgz#79888e452034223ad9609187a0ad1fe0d2ad4bdc"
@@ -6643,7 +6650,7 @@ mem@^4.0.0:
     mimic-fn "^1.0.0"
     p-is-promise "^2.0.0"
 
-memoize-one@^5.0.4:
+"memoize-one@>=3.1.1 <6", memoize-one@^5.0.4:
   version "5.0.4"
   resolved "https://registry.npm.taobao.org/memoize-one/download/memoize-one-5.0.4.tgz#005928aced5c43d890a4dfab18ca908b0ec92cbc"
   integrity sha1-AFkorO1cQ9iQpN+rGMqQiw7JLLw=
@@ -8874,6 +8881,19 @@ react-transition-group@^4.0.0:
     dom-helpers "^3.4.0"
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
+
+react-window-infinite-loader@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npm.taobao.org/react-window-infinite-loader/download/react-window-infinite-loader-1.0.3.tgz#6bc39ac4fc7472f4d57f1558b3375177db0615a9"
+  integrity sha1-a8OaxPx0cvTVfxVYszdRd9sGFak=
+
+react-window@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.npm.taobao.org/react-window/download/react-window-1.8.1.tgz#12f1db71d91552ed2263790e57cc77d950803db1"
+  integrity sha1-EvHbcdkVUu0iY3kOV8x32VCAPbE=
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    memoize-one ">=3.1.1 <6"
 
 react@^16.8.6:
   version "16.8.6"

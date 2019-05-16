@@ -21,6 +21,8 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "react-transition-group": "^4.0.0",
+    "react-window": "^1.8.1",
+    "react-window-infinite-loader": "^1.0.3",
     "request": "^2.88.0",
     "teaching-apis": "^1.5.0"
   },
