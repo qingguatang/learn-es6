@@ -43,7 +43,9 @@
   @if $line > 1 {
     display: -webkit-box;
     -webkit-line-clamp: $line;
-    flex-direction: column;
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+    /* autoprefixer: on */
   } @else {
     display: block;
     white-space: nowrap;
