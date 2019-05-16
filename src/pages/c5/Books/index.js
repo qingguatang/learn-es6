@@ -16,26 +16,24 @@ class BooksPage extends React.PureComponent {
     books: []
   };
 
-  onSearchKeyDown = e => {
-    if (e.keyCode === 13) {
-      this.load({ q: e.target.value });
-    }
+  onSearch = q => {
+    this.load({ q });
   };
 
   onScroll = async() => {
     const { query } = this.state;
-    await this.load({ page: query.page + 1 });
+    await this.load({ page: query.page + 1 }, true);
   };
 
   componentDidMount() {
     this.load({ q: 'javascript' });
   }
 
-  async load(query) {
+  async load(query, append) {
     query = {...this.state.query, ...query};
     const { data } = await axios.get(`http://192.168.1.104:4001/books?${qs.stringify(query)}`);
     const books = data.entries;
-    const nextBooks = [...this.state.books, ...books];
+    const nextBooks = append ? [...this.state.books, ...books] : books;
     this.setState({ books: nextBooks, query });
   }
 
@@ -43,31 +41,12 @@ class BooksPage extends React.PureComponent {
     const { books } = this.state;
     return (
       <div className={style.page}>
-        <div className={style.search}>
-          <div className="wrapper">
-            <Svg src={require('./img/search.svg')} />
-            <input type="text" placeholder="搜索商品" onKeyDown={this.onSearchKeyDown} />
-          </div>
-        </div>
+        <Search onSearch={this.onSearch} />
         <ScrollView className={style.scroll} onScroll={this.onScroll}>
           <ul className={style.list}>
             {
               books.map(book => (
-                <li key={book.id} className={style.book}>
-                  <div className="left part">
-                    <div className="image">
-                      <a href={book.link}>
-                        <img src={book.image} alt="" />
-                      </a>
-                    </div>
-                  </div>
-                  <div className="right part">
-                    <a className="name" href={book.link}>{book.name}</a>
-                    <div className="author">{book.author}</div>
-                    <LevelStar value={book.star} />
-                    <Price price={book.price} />
-                  </div>
-                </li>
+                <BookItem key={book.id} book={book} />
               ))
             }
           </ul>
@@ -76,6 +55,42 @@ class BooksPage extends React.PureComponent {
     );
   }
 }
+
+
+const Search = ({ onSearch }) => {
+  const onKeyDown = e => {
+    if (e.keyCode === 13) {
+      onSearch(e.target.value);
+    }
+  };
+  return (
+    <div className={style.search}>
+      <div className="wrapper">
+        <Svg src={require('./img/search.svg')} />
+        <input type="text" placeholder="搜索商品" onKeyDown={onKeyDown} />
+      </div>
+    </div>
+  );
+};
+
+
+const BookItem = ({ book }) => (
+  <li className={style.book}>
+    <div className="left part">
+      <div className="image">
+        <a href={book.link}>
+          <img src={book.image} alt="" />
+        </a>
+      </div>
+    </div>
+    <div className="right part">
+      <a className="name" href={book.link}>{book.name}</a>
+      <div className="author">{book.author}</div>
+      <LevelStar value={book.star} />
+      <Price price={book.price} />
+    </div>
+  </li>
+);
 
 
 const Price = ({ price }) => {
