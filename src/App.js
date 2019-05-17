@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import C2 from './C2';
 import C3 from './C3';
 import Qrcode from './pages/c5/Qrcode';
-import BooksPage from './pages/c5/Books';
+import { BooksPage, VirtualBooksPage } from './pages/c5/Books';
 import './App.scss';
 
 
@@ -18,6 +18,7 @@ class App extends Component {
 
           <Route path="/c5/qrcode" component={Qrcode} />
           <Route path="/c5/books" component={BooksPage} />
+          <Route path="/c5/vbooks" component={VirtualBooksPage} />
         </Router>
       </div>
     );

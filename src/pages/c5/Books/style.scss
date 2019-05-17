@@ -175,6 +175,13 @@ body {
       max-width: 100%;
     }
   }
+  &.virtual {
+    .image {
+      img {
+        max-height: 170px;
+      }
+    }
+  }
 
   .level-star-component {
     margin-bottom: rem(20);
@@ -182,6 +189,24 @@ body {
 
   .price-component {
     font-size: rem(40);
+  }
+
+  &.skeleton {
+    .image {
+      height: 175px;
+    }
+    .name {
+      height: 1.2em;
+      margin-top: 3px;
+    }
+    .author {
+      height: 1em;
+      width: 6em;
+      margin-top: 10px;
+    }
+    .image, .name, .author {
+      background: #f2f2f2;
+    }
   }
 }
 
@@ -194,3 +219,4 @@ body {
     color: #666;
   }
 }
+

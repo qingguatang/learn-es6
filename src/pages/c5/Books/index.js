@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import cx from 'classnames';
 import axios from 'axios';
 import style from './style.scss';
 import qs from 'query-string';
 import Svg from 'react-inlinesvg'
 import ScrollView from 'components/ScrollView';
+import { FixedSizeList as List } from 'react-window';
 
 
-class BooksPage extends React.PureComponent {
+class BooksPage extends PureComponent {
   state = {
     query: {
       page: 1,
@@ -17,6 +18,7 @@ class BooksPage extends React.PureComponent {
   };
 
   onSearch = search => {
+    // show loading
     this.load({ search });
   };
 
@@ -31,9 +33,7 @@ class BooksPage extends React.PureComponent {
 
   async load(query, append) {
     query = {...this.state.query, ...query};
-    const loc = window.location;
-    const { data } = await axios.get(`${loc.protocol}//${loc.hostname}:4001/books?${qs.stringify(query)}`);
-    const books = data.entries;
+    const books = await requestBooks(query);
     const nextBooks = append ? [...this.state.books, ...books] : books;
     this.setState({ books: nextBooks, query });
   }
@@ -44,17 +44,126 @@ class BooksPage extends React.PureComponent {
       <div className={style.page}>
         <Search onSearch={this.onSearch} />
         <ScrollView className={style.scroll} onScroll={this.onScroll}>
-          <ul className={style.list}>
+          <div className={style.list}>
             {
               books.map(book => (
                 <BookItem key={book.id} book={book} />
               ))
             }
-          </ul>
+          </div>
         </ScrollView>
       </div>
     );
   }
+}
+
+
+class VirtualBooksPage extends PureComponent {
+  state = {
+    search: 'javascript'
+  }
+
+  constructor(props) {
+    super(props);
+    this.listSize = {
+      width: window.screen.availWidth,
+      height: window.screen.availHeight - 46
+    };
+  }
+
+  onSearch = search => {
+    this.setState({ search });
+  };
+
+  render() {
+    const listSize = this.listSize;
+    return (
+      <div className={cx(style.page)}>
+        <Search onSearch={this.onSearch} />
+        <List height={listSize.height} itemCount={1000} itemSize={200} width={listSize.width}
+            itemData={this.state.search}>
+          {Row}
+        </List>
+      </div>
+    );
+  }
+}
+
+class Row extends PureComponent {
+  state = {
+    book: null
+  };
+
+  componentDidMount() {
+    this.load();
+  }
+
+  componentWillUnmount() {
+    this.disposed = true;
+  }
+
+  componentDidUpdate(prev) {
+    if (prev.data !== this.props.data) {
+      this.load();
+    }
+  }
+
+  async load() {
+    const { data: search, index } = this.props
+    const book = await loadBook(search, index);
+    this.disposed || this.setState({ book });
+  }
+
+  render() {
+    const { style } = this.props;
+    const { book } = this.state;
+    return (
+      <div style={style}>
+        {
+          book ? <BookItem className="virtual" book={book} /> : <BookItemSkeleton />
+        }
+      </div>
+    );
+  }
+}
+
+
+const BookItemSkeleton = () => (
+  <div className={cx(style.book, 'skeleton')}>
+    <div className="left part">
+      <div className="image"></div>
+    </div>
+    <div className="right part">
+      <div className="name"></div>
+      <div className="author"></div>
+    </div>
+  </div>
+);
+
+
+// with naive cache support
+const bookCache = new Map();
+async function loadBook(search, index) {
+  const pageSize = 20;
+  const page = Math.floor(index / pageSize);
+
+  const key = `${search}$$$${page}`;
+  let defer = bookCache.get(key);
+  if (!defer) {
+    defer = requestBooks({ search, page: page + 1 });
+    bookCache.set(key, defer);
+    setTimeout(() => bookCache.remove(key), 60000);
+  }
+
+  const books = await defer;
+  return books[index - page * pageSize];
+}
+
+
+async function requestBooks(query) {
+  const loc = window.location;
+  const { data } = await axios.get(`${loc.protocol}//${loc.hostname}:4001/books?${qs.stringify(query)}`);
+  return data.entries;
 }
 
 
@@ -64,19 +173,20 @@ const Search = ({ onSearch }) => {
       onSearch(e.target.value);
     }
   };
+
   return (
     <div className={style.search}>
       <div className="wrapper">
         <Svg src={require('./img/search.svg')} />
-        <input type="text" placeholder="搜索商品" onKeyDown={onKeyDown} />
+        <input type="search" placeholder="搜索商品" onKeyDown={onKeyDown} />
       </div>
     </div>
   );
 };
 
 
-const BookItem = ({ book }) => (
-  <li className={style.book}>
+const BookItem = ({ className, book }) => (
+  <div className={cx(style.book, className)}>
     <div className="left part">
       <div className="image">
         <a href={book.link}>
@@ -90,11 +200,12 @@ const BookItem = ({ book }) => (
       <LevelStar value={book.star} />
       <Price price={book.price} />
     </div>
-  </li>
+  </div>
 );
 
 
 const Price = ({ price }) => {
+  price = price || 0;
   const re = /(\d+)\.(\d+)/;
   const m = re.exec(price.toFixed(2));
   return (
@@ -122,4 +233,5 @@ const LevelStar = ({ value }) => {
 
 
 export default BooksPage;
+export { BooksPage, VirtualBooksPage };
 
