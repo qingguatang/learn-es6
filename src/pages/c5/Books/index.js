@@ -11,13 +11,13 @@ class BooksPage extends React.PureComponent {
   state = {
     query: {
       page: 1,
-      q: ''
+      search: ''
     },
     books: []
   };
 
-  onSearch = q => {
-    this.load({ q });
+  onSearch = search => {
+    this.load({ search });
   };
 
   onScroll = async() => {
@@ -26,12 +26,13 @@ class BooksPage extends React.PureComponent {
   };
 
   componentDidMount() {
-    this.load({ q: 'javascript' });
+    this.load({ search: 'javascript' });
   }
 
   async load(query, append) {
     query = {...this.state.query, ...query};
-    const { data } = await axios.get(`http://192.168.1.104:4001/books?${qs.stringify(query)}`);
+    const loc = window.location;
+    const { data } = await axios.get(`${loc.protocol}//${loc.hostname}:4001/books?${qs.stringify(query)}`);
     const books = data.entries;
     const nextBooks = append ? [...this.state.books, ...books] : books;
     this.setState({ books: nextBooks, query });

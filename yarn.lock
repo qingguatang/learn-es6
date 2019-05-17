@@ -10127,10 +10127,10 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
-teaching-apis@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.npm.taobao.org/teaching-apis/download/teaching-apis-1.5.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fteaching-apis%2Fdownload%2Fteaching-apis-1.5.0.tgz#f900998998f088a355446a75a3d7d987994f2891"
-  integrity sha1-+QCZiZjwiKNVRGp1o9fZh5lPKJE=
+teaching-apis@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.npm.taobao.org/teaching-apis/download/teaching-apis-1.6.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fteaching-apis%2Fdownload%2Fteaching-apis-1.6.0.tgz#3b23dc26f0ca3a8d9d72f3643afc42d0b3094d80"
+  integrity sha1-OyPcJvDKOo2dcvNkOvxC0LMJTYA=
   dependencies:
     "@koa/cors" "^3.0.0"
     art-template "^4.13.2"

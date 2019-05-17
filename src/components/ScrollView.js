@@ -49,7 +49,7 @@ class ScrollView extends Component {
 
     const res = this.props.onScroll() || {};
     if (typeof res.then === 'function') {
-      res.then(done);
+      res.then(done, done);
     } else {
       setTimeout(done, 500);
     }
