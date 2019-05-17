@@ -152,7 +152,7 @@ async function loadBook(search, index) {
   if (!defer) {
     defer = requestBooks({ search, page: page + 1 });
     bookCache.set(key, defer);
-    setTimeout(() => bookCache.remove(key), 60000);
+    setTimeout(() => bookCache.delete(key), 60000);
   }
 
   const books = await defer;
