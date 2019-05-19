@@ -15,9 +15,7 @@ class Qrcode extends React.PureComponent {
 
   componentDidMount() {
     console.log('mount');
-    qrcode.toDataURL(this.props.url).then(imageUrl => {
-      this.setState({ imageUrl });
-    });
+    this.createQrcode(this.props.url);
   }
 
   componentWillUnmount() {
@@ -27,11 +25,18 @@ class Qrcode extends React.PureComponent {
   componentDidUpdate(prev) {
     console.log('update');
     if (prev.url !== this.props.url) {
-      qrcode.toDataURL(this.props.url).then(imageUrl => {
+      this.createQrcode(this.props.url);
+    }
+  }
+
+  createQrcode(url) {
+    if (url) {
+      qrcode.toDataURL(url).then(imageUrl => {
         this.setState({ imageUrl });
       });
     }
   }
+
 
   // shouldComponentUpdate(nextProps, nextState) {
   //   if (this.props.url !== nextProps.url ||
@@ -59,9 +64,9 @@ class QrcodePage extends React.Component {
 
   render() {
     const { url, other } = this.state;
-    console.log('page render');
     const node =  (
       <div className={style.qrcode}>
+        {false && <>
         <button onClick={() => this.setState({ other: (other + 1) % 2 })}>Other</button>
         { other ?
             <div>
@@ -72,7 +77,7 @@ class QrcodePage extends React.Component {
               <div key="2" name="b" className="other"><input type="checkbox" />2</div>
               <div key="1" name="a" className="other"><input type="checkbox" />1</div>
             </div>
-        }
+        } </> }
         <div className="field">
           <input type="text" className="form-control" placeholder="URL"
             value={url} onChange={e => this.setState({ url: e.target.value })} />
