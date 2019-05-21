@@ -51,7 +51,7 @@ class Page extends React.Component {
             onOk={this.handleOk}
             onCancel={this.handleCancel}>
           <div>
-            通过实例学习<a href="#">ES6</a>又快又有趣
+            通过实例学习<a href="https://www.google.com">ES6</a>又快又有趣
           </div>
         </Modal>
       </div>
