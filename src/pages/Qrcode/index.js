@@ -12,9 +12,11 @@ class QrcodePage extends React.Component {
     return (
       <div className={style.qrcode}>
         <div className="field">
-          <input type="text" className="form-control" placeholder="URL" />
+          <input type="text" className="form-control" placeholder="URL"
+            value={this.state.url} onChange={e => this.setState({url: e.target.value})} />
         </div>
         <Qrcode url={this.state.url} />
+        <div>{this.state.url}</div>
       </div>
     );
   }
@@ -25,7 +27,26 @@ class Qrcode extends React.Component {
     imgUrl: null
   }
 
+  constructor(props) {
+    super(props);
+    console.log('ctor');
+  };
+
   componentDidMount() {
+    console.log('mounted');
+    this.createQrcode();
+  }
+
+  componentDidUpdate(prev) {
+    console.log('updated');
+    console.log(this.props.url);
+    console.log(this.state.imgUrl);
+    if (prev.url !== this.props.url) {
+      this.createQrcode();
+    }
+  }
+
+  createQrcode() {
     qrcodeUtil.toDataURL(this.props.url)
       .then(imgUrl => {
         this.setState({ imgUrl });
@@ -36,6 +57,7 @@ class Qrcode extends React.Component {
   }
 
   render() {
+    console.log('render');
     const { imgUrl } = this.state;
     return (
       <div>
