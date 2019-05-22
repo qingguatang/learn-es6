@@ -29,18 +29,18 @@ class Qrcode extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log('ctor');
+    // console.log('ctor');
   };
 
   componentDidMount() {
-    console.log('mounted');
+    // console.log('mounted');
     this.createQrcode();
   }
 
   componentDidUpdate(prev) {
-    console.log('updated');
-    console.log(this.props.url);
-    console.log(this.state.imgUrl);
+    // console.log('updated');
+    // console.log(this.props.url);
+    // console.log(this.state.imgUrl);
     if (prev.url !== this.props.url) {
       this.createQrcode();
     }
@@ -57,7 +57,7 @@ class Qrcode extends React.Component {
   }
 
   render() {
-    console.log('render');
+    // console.log('render');
     const { imgUrl } = this.state;
     return (
       <div>
