@@ -12,7 +12,7 @@ class QrcodePage extends React.Component {
   render() {
     const { count } = this.state;
     // console.log('page render')
-    return (
+    const el = (
       <div className={style.qrcode}>
         <button onClick={e => this.setState({count: count+1})}>{count}</button>
         <div className="field">
@@ -23,6 +23,8 @@ class QrcodePage extends React.Component {
         <div>{this.state.url}</div>
       </div>
     );
+    console.log(el);
+    return el;
   }
 }
 
