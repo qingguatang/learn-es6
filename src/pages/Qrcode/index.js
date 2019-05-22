@@ -23,7 +23,7 @@ class QrcodePage extends React.Component {
         <div>{this.state.url}</div>
       </div>
     );
-    console.log(el);
+    // console.log(el);
     return el;
   }
 }
