@@ -26,7 +26,7 @@ class QrcodePage extends React.Component {
   }
 }
 
-class Qrcode extends React.Component {
+class Qrcode extends React.PureComponent {
   state = {
     imgUrl: null
   }
@@ -50,10 +50,10 @@ class Qrcode extends React.Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.props.url !== nextProps.url ||
-      this.state.imgUrl !== nextState.imgUrl;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return this.props.url !== nextProps.url ||
+  //     this.state.imgUrl !== nextState.imgUrl;
+  // }
 
   createQrcode() {
     qrcodeUtil.toDataURL(this.props.url)
