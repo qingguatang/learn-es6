@@ -5,12 +5,16 @@ import style from './style.scss';
 
 class QrcodePage extends React.Component {
   state = {
-    url: 'https://www.google.com'
+    url: 'https://www.google.com',
+    count: 0
   }
 
   render() {
+    const { count } = this.state;
+    console.log('page render')
     return (
       <div className={style.qrcode}>
+        <button onClick={e => this.setState({count: count+1})}>{count}</button>
         <div className="field">
           <input type="text" className="form-control" placeholder="URL"
             value={this.state.url} onChange={e => this.setState({url: e.target.value})} />
@@ -46,6 +50,11 @@ class Qrcode extends React.Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return this.props.url !== nextProps.url ||
+      this.state.imgUrl !== nextState.imgUrl;
+  }
+
   createQrcode() {
     qrcodeUtil.toDataURL(this.props.url)
       .then(imgUrl => {
@@ -57,7 +66,7 @@ class Qrcode extends React.Component {
   }
 
   render() {
-    // console.log('render');
+    console.log('qrcode render');
     const { imgUrl } = this.state;
     return (
       <div>
