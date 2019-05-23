@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Transition from 'react-addons-css-transition-group';
 import './Modal.scss';
@@ -13,25 +14,61 @@ class Modal extends React.Component {
     ]
   };
 
+  handleClose = () => {
+    this.requestClose();
+  };
+
+  componentDidMount() {
+    const handler = e => {
+      if (e.keyCode === 27) {
+        this.requestClose();
+      }
+    }
+    window.addEventListener('keydown', handler);
+    this.keyHandler = handler;
+  }
+
+  componentWillUnmount() {
+    console.log('unmount');
+    window.removeEventListener('keydown', this.keyHandler);
+  }
+
   render() {
     const container = document.querySelector('body');
     return ReactDOM.createPortal(this.renderBody(), container);
   }
 
+  requestClose() {
+    const { onRequestClose } = this.props;
+    onRequestClose && onRequestClose();
+  }
+
+  handleAction(name) {
+    const handler = this.props[`on${name}`];
+    if (handler) {
+      if (handler() !== false) {
+        this.requestClose();
+      }
+    }
+  }
+
   renderBody() {
-    const { title, visible, children, onCancel, buttons } = this.props;
+    const {
+      title, visible, children,
+      className, buttons
+    } = this.props;
     return (
       <Transition transitionName="example" transitionEnterTimeout={300} transitionLeaveTimeout={500}>
       {
-        visible ? 
-        <div>
+        visible ?
+        <div className={className}>
           <div className="modal" style={{ display: 'block' }} tabIndex="-1" role="dialog">
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">{title}</h5>
                   <button type="button" className="close" data-dismiss="modal" aria-label="Close"
-                      onClick={onCancel}>
+                      onClick={this.handleClose}>
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
@@ -43,7 +80,7 @@ class Modal extends React.Component {
                   buttons.map((item, index) => (
                     <button key={index} type="button"
                       className={cx('btn', item.primary ? 'btn-primary' : 'btn-secondary')}
-                      onClick={this.props[`on${item.name}`]}
+                      onClick={() => this.handleAction(item.name)}
                       >{item.text}</button>
                   ))
                 }
@@ -74,6 +111,7 @@ class ConfirmModal extends React.Component {
       title,
       children: message,
       visible: this.state.visible,
+      onRequestClose: this.onRequestClose,
       onOk: this.onOk,
       onCancel: this.onCancel,
     };
@@ -82,18 +120,28 @@ class ConfirmModal extends React.Component {
     );
   }
 
-  onOk = () => {
+  onRequestClose = () => {
     this.setState({ visible: false });
+  }
+
+  onOk = () => {
     const { ok } = this.props;
     ok && ok();
   }
 
   onCancel = () => {
-    this.setState({ visible: false });
     const { cancel } = this.props;
     cancel && cancel();
   }
 }
+
+
+ConfirmModal.propTypes = {
+  title: PropTypes.string,
+  message: PropTypes.string.isRequired,
+  ok: PropTypes.func,
+  Cancel: PropTypes.func
+};
 
 
 Modal.confirm = function(options) {
