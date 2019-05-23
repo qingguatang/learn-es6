@@ -15,11 +15,22 @@ class QrcodePage extends React.Component {
     const el = (
       <div className={style.qrcode}>
         <button onClick={e => this.setState({count: count+1})}>{count}</button>
+        {
+          count % 2 === 1 ?
+          <div>
+            <div key="a" className="a">1 <input type="checkbox" /></div>
+            <div key="b" className="b">2 <input type="checkbox" /></div>
+          </div> :
+          <div>
+            <div key="b" className="b">2 <input type="checkbox" /></div>
+            <div key="a" className="a">1 <input type="checkbox" /></div>
+          </div>
+        }
         <div className="field">
           <input type="text" className="form-control" placeholder="URL"
             value={this.state.url} onChange={e => this.setState({url: e.target.value})} />
         </div>
-        <Qrcode url={this.state.url} />
+        <QrcodeComponent url={this.state.url} />
         <div>{this.state.url}</div>
       </div>
     );
@@ -27,6 +38,11 @@ class QrcodePage extends React.Component {
     return el;
   }
 }
+
+
+const QrcodeComponent = (props) => (
+  <Qrcode key={props.url} {...props} />
+);
 
 class Qrcode extends React.PureComponent {
   state = {
@@ -48,7 +64,7 @@ class Qrcode extends React.PureComponent {
     // console.log(this.props.url);
     // console.log(this.state.imgUrl);
     if (prev.url !== this.props.url) {
-      this.createQrcode();
+      // this.createQrcode();
     }
   }
 
